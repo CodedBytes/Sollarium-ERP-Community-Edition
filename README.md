@@ -1,6 +1,6 @@
 <p align="center">
 
-  ![Sollarium banner.](/banner.jpg "Sollarium banner")
+  ![Sollarium banner.](/banner_sollarium.jpg "Sollarium banner")
 
 </p>
 
