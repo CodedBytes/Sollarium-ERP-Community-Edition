@@ -1,0 +1,12 @@
+.users-management-wrapper {
+    padding: 15px 10%;
+    margin-top: 20px;
+}
+
+.users-management-wrapper .users-table .table-header{
+    background-color: white;
+    border: 1px solid rgb(235, 235, 235);
+    padding: 15px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}

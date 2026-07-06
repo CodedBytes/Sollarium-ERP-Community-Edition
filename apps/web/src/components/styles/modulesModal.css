@@ -1,0 +1,21 @@
+.module-modal-wrapper {
+    border: 1px solid rgb(250, 250, 250);
+    box-shadow: rgba(0, 0, 0, 0.08) 1px 5px 10px 1px;
+    padding: 10px;
+    min-height: 140px
+}
+
+.module-modal-wrapper button.menu-button{
+    border: 0;
+    position: absolute;
+    right: 0;
+}
+
+.module-modal-wrapper .top-wrapper .module-description-area .module-description{
+    word-break: break-all;
+    width: 90%;
+}
+
+.module-menu-modal button{
+    border: 0;
+}

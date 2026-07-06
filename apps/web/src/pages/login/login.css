@@ -1,0 +1,11 @@
+.main-wrapper {
+    height: 80vh;
+}
+
+.main-wrapper .login-wrapper .admin-label a {
+    color: rgb(2, 2, 218);
+}
+.main-wrapper .login-wrapper .admin-label a:hover {
+    color: rgb(83, 83, 255);
+    text-decoration: underline;
+}

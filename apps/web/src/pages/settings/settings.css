@@ -1,0 +1,87 @@
+.full-page-wrapper {
+    padding: 20px 0px;
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 5px;
+    height: calc(100vh - 60px);
+}
+
+.full-page-wrapper .items-wrapper {
+    width: calc(100vh - 270px);
+}
+
+.full-page-wrapper .left-menu {
+    border-right: 2px solid rgb(231, 231, 231);
+}
+
+.full-page-wrapper .left-menu .menu-full-wrapper .menu-content {
+    padding: 0px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.full-page-wrapper .left-menu .menu-full-wrapper .menu-content .menu-item{
+    border: 1px solid transparent;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: all 0.1s;
+}
+
+.full-page-wrapper .left-menu .menu-full-wrapper .menu-content .menu-item:hover{
+    border: 1px solid rgb(95, 95, 95);
+    border-radius: 2px;
+    padding: 10px 15px;
+}
+
+.full-page-wrapper .left-menu .menu-full-wrapper .menu-content .menu-item.active{
+    border: 1px solid rgb(228, 228, 228);
+    border-bottom: 3px solid rgb(97, 100, 250);
+    background-color: rgb(228, 228, 228);
+    border-radius: 2px;
+    padding: 10px 15px;
+}
+
+.full-page-wrapper .items-wrapper .users{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.full-page-wrapper .items-wrapper div.header {
+    background-color: rgb(226, 226, 226);
+    padding: 5px 10px;
+    font-weight: bold;
+}
+
+.full-page-wrapper .items-wrapper .users .users-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 0px 10px;
+}
+
+.full-page-wrapper .items-wrapper .users .users-content .manage-users a:hover,
+.full-page-wrapper .items-wrapper .permission-content .manage-permissions a:hover{
+    text-decoration: underline;
+    color: rgb(30, 81, 248);
+}
+
+.full-page-wrapper .items-wrapper .users .users-content .invite-wrapper{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    gap: 20px;
+}
+
+@media screen and (max-width: 900px) {
+    .full-page-wrapper .left-menu .menu-full-wrapper .menu-header {
+        display: none;
+    }
+
+    .integration-wrapper .integration-content .action-buttons {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+}

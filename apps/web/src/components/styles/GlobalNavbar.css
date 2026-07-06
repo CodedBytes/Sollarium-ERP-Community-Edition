@@ -1,0 +1,78 @@
+header > nav {
+    background-color: white;
+    padding: 0px 20px;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 10px 0px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+header > nav > .left-wrapper ul > li {
+    padding: 5px 13px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+header > nav > .left-wrapper ul > li a{
+    font-size: 17px;
+}
+
+header > nav > .left-wrapper ul > li:hover {
+    border-radius: 5px;
+    border: 1px solid rgb(218, 218, 218);
+    background-color: rgba(228, 228, 228, 0.212);
+}
+
+header > nav .right-wrapper {
+    padding: 5px 10px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: all 0.2s;
+}
+
+header > nav .right-wrapper:hover {
+    padding: 5px 10px;
+    border: 1px solid rgb(201, 201, 201);
+    background-color: rgba(228, 228, 228, 0.212);
+}
+
+header > nav .right-wrapper .user-area-button {
+    line-height: 1.3;
+}
+
+header > nav > .mobile-button {
+    display: none;
+}
+
+ul.user-menu > li {
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: all 0.2s;
+}
+
+ul.user-menu > li:hover {
+    border: 1px solid rgb(201, 201, 201);
+    background-color: rgba(228, 228, 228, 0.212);
+}
+
+@media screen and (max-width: 900px) {
+    header > nav > .left-wrapper ul > li {
+        display: none;
+    }
+
+    header > nav .right-wrapper {
+        display: none;
+    }
+
+    header > nav {
+        padding: 10px 20px;
+    }
+
+    header > nav > .mobile-button {
+        display: flex;
+    }
+}

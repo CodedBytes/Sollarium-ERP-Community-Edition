@@ -1,0 +1,31 @@
+.home-main-wrapper > .content-wrapper > .subcontainer-wrapper > .widgets-and-modules-container > .modules-modal{
+    border: 1px solid rgb(255, 255, 255);
+    background-color: rgb(255, 255, 255);
+    padding: 15px;
+    box-shadow: rgb(0, 0, 0, 0.1) 1px 5px 10px 1px;
+    border-radius: 10px;
+}
+
+.home-main-wrapper > .content-wrapper > .subcontainer-wrapper > .widgets-and-modules-container > .modules-modal .modules-available .content{
+    background-color: rgb(241, 241, 241);
+    border: 1px solid rgb(247, 247, 247);
+    border-radius: 10px;
+    padding: 10px 20px;
+}
+
+.home-main-wrapper > .content-wrapper > .subcontainer-wrapper > .widgets-and-modules-container > .modules-modal .modules-available .content .description a {
+    color: rgb(64, 64, 228);
+}
+.home-main-wrapper > .content-wrapper > .subcontainer-wrapper > .widgets-and-modules-container > .modules-modal .modules-available .content .description a:hover {
+    text-decoration: underline;
+    color: rgb(30, 81, 248);
+}
+
+.p-progressbar.p-component.p-progressbar-determinate {
+    height: 10px;
+    width: 100%;
+}
+
+.home-main-wrapper > .content-wrapper > .subcontainer-wrapper {
+    
+}
