@@ -8,7 +8,7 @@ import jwt from '@fastify/jwt';
 import csrfProtection from '@fastify/csrf-protection';
 import dotenv from 'dotenv';
 import zlib from 'zlib'
-import OAuth from './src/core/http/routes/OAuth.js';
+import OAuth from './src/core/http/plugins/OAuth.plugin.js';
 import bcrypt from 'bcrypt';
 import { initRedis, getCache, setCache, delCache } from './src/config/redisClient.js';
 import { getTenantConnection, withTemporaryConnection } from './src/config/knex_DB.js';
@@ -16,6 +16,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { ApiError } from './src/core/utils/apiError.js';
 import database_decorator from './src/core/http/decorators/databaseTenant.js';
 import jwt_decorator from './src/core/http/decorators/JWT_Auth.js';
+import OAuthPlugin from './src/core/http/plugins/OAuth.plugin.js';
 dotenv.config();
 
 /// Conexões de Database
@@ -35,9 +36,9 @@ const IS_PROD = false;
 fastify.register(helmet, {
   contentSecurityPolicy: IS_PROD ? {
     directives: {
-        defaultSrc: ["'self'"],
-        styleSrc: ["'self'", "'unsafe-inline'"],
-        scriptSrc: ["'self'"]
+      defaultSrc: ["'self'"],
+      styleSrc: ["'self'", "'unsafe-inline'"],
+      scriptSrc: ["'self'"]
     }
   } : false,
   hsts: IS_PROD
@@ -77,11 +78,9 @@ fastify.register(csrfProtection, { cookieOpts: { signed: true } });
 fastify.register(database_decorator, { HQ_DB, getTenantConnection });
 fastify.register(jwt_decorator);
 
-// --- ROTAS ----------------------------------------------------------------------------------------
-fastify.get('/api/OAuth/csrf', OAuth.GenerateCSRF(IS_PROD));
-fastify.post('/api/OAuth/login', {config: {rateLimit: { max: 4, timeWindow: '1 minute' }}}, OAuth.DoLogin(withTemporaryConnection, getTenantConnection, IS_PROD, fastify, bcrypt, getCache, setCache, delCache, uuidv4, ApiError, HQ_DB));
-fastify.get('/api/OAuth/me', { preHandler: async(req, rep) => { await req.authenticate(req, rep); } }, async (req, rep) => { return { user: req.user }; });
-fastify.post('/api/OAuth/logout', { preHandler: async(req, rep) => { await req.authenticate(req, rep); await req.tenantDb(req, rep); } }, OAuth.DoLogout(getCache, delCache, IS_PROD, ApiError));
+// ---- Registros de rotas em formato de plugin ----------------------------------------------------------------------------------------
+fastify.register(OAuthPlugin, { IS_PROD, bcrypt, getCache, setCache, delCache, uuidv4,  ApiError, HQ_DB, getTenantConnection, rateLimit });
+
 
 // Exemplo de rota privada da aplicação
 // fastify.post('/api/contracts', { onRequest: fastify.csrfProtection, preHandler: [fastify.authenticate, fastify.tenantDb] }, async (request, reply) => {

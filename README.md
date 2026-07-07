@@ -30,15 +30,15 @@ Seu sistema ERP, open-core, para crescimento empresarial.
 <br>
 
 ## Sollarium ERP
-<span>A versão community do sistema de ERP Sollarium é 100% gratuita e idicada para pequenas empresas focadas em um controle empresarial intuitivo, adaptado para os padrões e tecnologias atualmente presentes no mercado e com sua propria infraestrutura montada, fazendo com que acompanhem a sua tão desejada evolução empresarial.</span>
+<span>A versão community do sistema de ERP Sollarium é 100% gratuito e indicada para pequenas empresas focadas em um controle empresarial intuitivo, adaptado para os padrões e tecnologias atualmente presentes no mercado, mas com sua propria infraestrutura montada, fazendo com que acompanhem a sua tão desejada evolução empresarial.</span>
 
 ## Motivação e descrição do sistema
 <span>Um sistema de ERP é uma ferramenta que pode escalar o controle empresarial, o que acaba sendo essencial para o bom ecosistema de uma emrpesade qualquer porte.</span><br>
-<span>Pensando nisso, cheguei a conclusão de que a construção de um sistema ERP acessivel apra pequenas empresas poderia ajudar até mesmo empreendedores a começar seu próprio negócio, sem a necessidade de uma contratação de um sistema ERP, o que incialmente, é um investimento relativamente pesado, deixando toda a carga das decisões financeiras para a carreira empresarial e é ai que nossa versão community do Sollarium entra em ação.</span><br>
-<span>Para a versão community do sistema, disponibilizamos uma forma para que desenvolvedores internos da sua empresa possam desenvolver modulos compativeis com o sistema, trazendo um dinamismo melhor e mais adequado para a sua empresa, necessitando apenas que os colaboradores envolvidos tenham noções de programação e setup de servidores pois é altamente indicado um load balancer para o uso deste sistema.</span>
+<span>Pensando nisso, cheguei a conclusão de que a construção de um sistema ERP acessivel para pequenas empresas poderia ajudar, até mesmo, empreendedores a começar seu próprio negócio, sem a necessidade de uma contratação de um sistema ERP, o que incialmente, é um investimento relativamente pesado, podendo assim deixar toda a carga das decisões financeiras para a carreira empresarial. pensando nisso, nossa versão community do Sollarium entra em ação.</span><br>
+<span>Para a versão community do sistema, disponibilizamos uma forma simples para que desenvolvedores internos da empresa possam desenvolver módulos compatíveis com o ERP, trazendo um melhor dinamismo para a sua empresa, necessitando apenas que os colaboradores envolvidos tenham capacitações em programação web e setup de servidores, pois é altamente indicado uma configuração de load balancers, seja com hardware fisico ou usando o nginx, para o uso deste ERP.</span>
 
 ## Módulos
-<span>O sistema é baseado em modularização de funções e departamentos para sua emrpesa, contemplando alguns modulos necessários para o inicio de um sistema ERP, como os listados abaixo.</span><br>
+<span>O sistema é baseado em modularização de funções e departamentos para sua empresa, contemplando alguns módulos necessários para o inicio de um sistema ERP, como os listados abaixo.</span><br>
 <span>Vale notar que, muitos destes módulos ainda estão em desenvolvimento, marcados com a tag <span style="color: blue; font-weight: 600;">[WIP]</span> para os módulos em desenvolvimento e <span style="color: red; font-weight: 600;">[New]</span> para os módulos recém desenvolvidos e liberados para o uso.</span><br><br>
 <ul>
   <li><b><span style="color: blue; font-weight: 600;">[WIP]</span> Compras:</b> Um módulo desenhado para realização de compras destinadas a empresa, com geração de documentação completa desde o pedido até o processamento da NF enviada pelo fornecedor.</li>
@@ -48,14 +48,9 @@ Seu sistema ERP, open-core, para crescimento empresarial.
   <li><b><span style="color: blue; font-weight: 600;">[WIP]</span> Recursos Humanos:</b> Um módulo focado em todo o ciclo de vida do colaborador, como cadastros de colaboradores, departamentos, funções, controle de folhas de pagamento e gestão de talentos.</li>
 </ul>
 
-<br>
-
-<div style="font-size: 20px; font-weight: 600; margin-bottom: 7px;">
-  Tecnologías
-</div>
-<hr style="height: 1px; margin-top: 0px; margin-bottom: 7px;">
+## Tecnologías
 <ul>
-  <li><b>React:</b> A famosa biblioteca da META esta sendo utilizada para realização deste projeto, trazendo uma facilidade de desenvolvimento para a versão community do Sollarium, e uma compatibilidade enorme com outros navegadores e dispositivos.</li>
+  <li><b>React:</b> A famosa biblioteca da META está sendo utilizada para realização deste projeto, trazendo uma facilidade de desenvolvimento para a versão community do Sollarium e uma compatibilidade enorme com outros navegadores e dispositivos.</li>
   <li><b>Node.js:</b> Para uma melhor facilidade de desenvolvimento para a versão community, estamos usando a versao 24 do node para o desenvolvimento do sistema de API privada do sistema.</li>
   <li><b>Fastify:</b> Uma das melhores frameworks para a criação de APIs restful indicadas para servidores de API utilizando node.js, trazendo agilidade nas requisições e um body-parser robusto imbutido.</li>
   <li><b>Knex / PostgreSQL:</b> Utilizamos o knex, um query builder em conjuunto com o PostgreSQL, que é um dos mais utilizados dentre os bancos de dados destinados a sistemas empresariais.</li>
@@ -63,13 +58,11 @@ Seu sistema ERP, open-core, para crescimento empresarial.
   <li><b>Docker:</b> É necessario a utilização do Docker para realização de atualizações automáticas com CI/CD, mantendo também as boas praticas de utilização de containers, preparadas para utilização em produção.</li>
 </ul>
 
-<br>
-
 ## Diagramas de comunicações e segurança
 
 <details open>
 <summary><b>Token CSRF</b></summary>
-<span>Este token é utilizado para validação do cliente e enviado a cada requisição para o backend em chamadas mutáveis como protocolos POST. É gerado um cookie, não httpOnly, para ser gravado em um header custom chamado X-CSRF-Token evitando ataques de Double Submit Cookie.</span>
+<span>Este token é utilizado para validação do cliente e enviado a cada requisição para o backend. É gerado um cookie, não httpOnly, para ser gravado em um header custom chamado X-CSRF-Token evitando ataques de Double Submit Cookie.</span>
 
 ```mermaid
 sequenceDiagram
@@ -78,31 +71,25 @@ sequenceDiagram
     participant ERP as ERP Confiável<br/>(Ex: tenant.sollarium.com)
     participant Hacker as Site Malicioso<br/>(Ex: tenant.solIarium.com)
 
-    %% --- FASE 1 ---
-    rect rgb(240, 245, 255)
+    %% FASE 1: Estabelecendo a Sessão Legítima
         Note over Vitima, ERP: FASE 1: Estabelecendo a Sessão Legítima
         Vitima->>ERP: Faz login com usuário e senha
         ERP-->>Vitima: Valida credenciais e envia Cookie de Sessão
         Note left of Vitima: Cookie fica guardado<br/>na memória do navegador
-    end
 
-    %% --- FASE 2 ---
-    rect rgb(255, 248, 240)
+    %% FASE 2: A Armadilha (Acesso ao site terceiro)
         Note over Vitima, Hacker: FASE 2: A Armadilha (Acesso ao site terceiro)
         Vitima->>Hacker: Visita o site malicioso (em outra aba ou link)
         Hacker-->>Vitima: Retorna página com código oculto (Form/Payload)
-    end
 
-    %% --- FASE 3 ---
-    rect rgb(255, 240, 240)
+    %% FASE 3: O Ataque (Exploração do Ponto Cego)
         Note over Vitima, ERP: FASE 3: O Ataque (Exploração do Ponto Cego)
         Vitima->>ERP: Código oculto força requisição POST/GET automática
         
-        Note over Vitima, ERP: ⚠️ COMPORTAMENTO DO NAVEGADOR:<br/>O cookie de sessão do ERP é anexado AUTOMATICAMENTE!
+        Note over Vitima, ERP: O cookie de sessão do ERP é anexado AUTOMATICAMENTE!
         
         ERP->>ERP: Valida o Cookie (Sessão é válida)
         ERP-->>Vitima: Executa a ação maliciosa (ex: deletar usuário)
-    end
 ```
 </details>
 
@@ -133,7 +120,6 @@ sequenceDiagram
     DB-->>API: Retorna lista de sessões antigas
 
     %% Bloco Transacional (Garantia de Atomicidade)
-    rect rgb(240, 245, 255)
         Note over API, DB: [Início da Transação do Banco]
         
         alt Usuário já estava logado
@@ -146,7 +132,6 @@ sequenceDiagram
         
         API->>Redis: Salva novos dados de sessão e Token
         Note over API, Redis: Salva: Dados básicos, Token OAuth, Nome,<br/>IP, ID e Permissões no Redis para futuras pesquisas.
-    end
 
     %% 4. Finalização da Resposta
     Note over API: Injeta Cookies do JWT de login na requisição.
@@ -158,7 +143,7 @@ sequenceDiagram
 <details open>
 
 <summary><b>Utilização das endpoints internas</b></summary>
-<span>O sistema de login se benficia das requisições com o header CSRF para realização de qualquer coisa no sistema, incluindo o login do usuário com a geração de token para utilização da API interna do sistema.</span></br>
+<span>Todo o sistema se benficia das requisições com o header CSRF para realização de qualquer coisa no sistema, incluindo o login do usuário com a geração de token para utilização da API interna do sistema.</span></br>
 <span>Abaixo temos um exemplo de como o sistema de login se comporta no sistema, após o processamento do CSRF.</span>
 
 ```mermaid
@@ -196,8 +181,8 @@ sequenceDiagram
 
     %% Execução da Rota (Controller)
     Note over Fastify, Controller: [Destino Final] Execução da Lógica Comercial
-    Fastify->>Controller: Executa OAuth.DoLogout(getCache, delCache...)
-    Controller->>Redis: Limpa chaves de cache (delCache)
+    Fastify->>Controller: Executa OAuth.DoLogout(...)
+    Controller->>Redis: Limpa chaves de cache
     Controller->>DB: Roda queries necessárias com a conexão retornada pelo req.tenantDb()<br/> guardadas dentro de um re.db por exemplo;
     Controller-->>Navegador: HTTP 200 OK (Gera headers para limpar os cookies)
 ```

@@ -7,38 +7,25 @@
  * 
  * Copyright: LGPL3 - João Victor Segantini - CodedBytes
  * 
- * Arquivo de rotas para Autenticação 2.1
+ * Plugin para rotas de Autenticação 2.1
  */
+const AuthRoutes = async (fastify, options) => {
+    const { IS_PROD, bcrypt, getCache, setCache, delCache, 
+        uuidv4, ApiError, HQ_DB, getTenantConnection, rateLimit } = options;
 
-/**
- * Responsável por criar o token CSRF
- * @param {Boolean} IS_PROD - Identifica se o server esta em produção ou não.
- * @returns Retorna um objeto contendo uma mensagem para saber se o CSRF foi setado ou não
- */
-const GenerateCSRF = (IS_PROD) => {
-    return async (req, rep) => {
+    /**
+     * Responsável por criar o token CSRF
+     */
+    fastify.get('/api/OAuth/csrf', async (req, rep) => {
         const token = await rep.generateCsrf();
         rep.setCookie('csrfToken', token, {path: '/', secure: IS_PROD, sameSite: IS_PROD ? 'strict' : 'lax', httpOnly: false });
         return rep.code(200).send({ message: 'CSRF Setado corretamente.' });
-    }
-}
+    });
 
-/**
- * Responsável por realizar o login do usuário
- * @param {Knex} getTenantConnection - Para abertura de pool de conexão com o banco de dados
- * @param {Boolean} IS_PROD - Identifica se o server esta em produção ou não.
- * @param {Fastify} fastify - Instancia do servidor da API
- * @param {Bcrypt} bcrypt - Biblioteca para criar hashes
- * @param {Redis} getCache - Responsável por pegar o cache do redis
- * @param {Redis} setCache - Responsável por setar o cache do redis
- * @param {Redis} delCache - Responsável por deletar o cache do redis
- * @param {UUID} uuidv4 - Biblioteca para criar hashes de identificação
- * @param {ApiError} ApiError - Classe de controle de erros
- * @param {Object} HQ_DB - Classe de controle de erros
- * @returns Retorna informações do usuário e mensagem de sucesso no login.
- */
-const DoLogin = (getTenantConnection, IS_PROD, fastify, bcrypt, getCache, setCache, delCache, uuidv4, ApiError, HQ_DB) => {
-    return async (req, rep) => {
+    /**
+     * Responsável por autenticar o usuário.
+     */
+    fastify.post('/api/OAuth/login', {config: {rateLimit: { max: 4, timeWindow: '1 minute' }}}, async (req, rep) => {
         const { email, senha } = req.body;
 
         try {
@@ -123,19 +110,17 @@ const DoLogin = (getTenantConnection, IS_PROD, fastify, bcrypt, getCache, setCac
             if (error instanceof ApiError) return rep.code(error.statusCode || 400).send({ msg: error.message });
             return rep.code(500).send({ error: 'Um erro técnico aconteceu ao processar o login.' });
         }
-    }
-}
+    });
 
-/**
- * Responsável por fazer o logout do usuário.
- * @param {Redis} getCache - Responsável por pegar o cache do redis
- * @param {Redis} delCache - Responsável por deletar o cache do redis
- * @param {Boolean} IS_PROD - Identifica se o server esta em produção ou não.
- * @param {ApiError} ApiError - Classe de controle de erros
- * @returns Retorna uma mensagem de sucesso ao realizar o logout.
- */
-const DoLogout = (getCache, delCache, IS_PROD, ApiError) => {
-    return async (req, rep) => {
+    /**
+     * 
+     */
+    fastify.get('/api/OAuth/me', { preHandler: async(req, rep) => { await req.authenticate(req, rep); } }, async (req, rep) => { return { user: req.user }; });
+
+    /**
+     * Responsável por fazer o logout do usuário.
+     */
+    fastify.post('/api/OAuth/logout', { preHandler: async(req, rep) => { await req.authenticate(req, rep); await req.tenantDb(req, rep); } }, async (req, rep) => {
         const session = req.cookies["s_ID"];
         const client = req.dbPool;
         const user_id = await getCache(`session:${session}:user_id`);
@@ -173,11 +158,7 @@ const DoLogout = (getCache, delCache, IS_PROD, ApiError) => {
             if (error instanceof ApiError) return rep.code(error.statusCode || 400).send({ msg: error.message });
             return rep.code(500).send({ error: 'Um erro técnico aconteceu ao realizar o logout.' });
         }
-    }
-}
+    });
+};
 
-module.exports = {
-    GenerateCSRF,
-    DoLogin,
-    DoLogout,
-}
+module.exports = AuthRoutes;
